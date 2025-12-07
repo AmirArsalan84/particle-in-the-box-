@@ -1,965 +1,207 @@
-Solving the One-Dimensional Infinite Potential Well Using Analytical and Numerical Methods
+# Solving the One-Dimensional Infinite Potential Well Using Analytical and Numerical Methods
 
 This project solves the time-independent Schrödinger equation for a one-dimensional infinite potential well using two methods:
 
-Analytical (Exact) Solution
-
-Numerical Solution using Taylor expansion and discretization of the second derivative.
+1.  **Analytical (Exact) Solution**
+2.  **Numerical Solution** using Taylor expansion and discretization of the second derivative.
 
 The goal is to compare the exact wave function with the numerical approximation and to examine the structure of quantized energies.
 
-1. Physics of the Problem: Infinite Potential Well
+## 1. Physics of the Problem: Infinite Potential Well
 
-The potential:
+The potential is defined as:
 
-𝑉
-(
-𝑥
-)
-=
-{
-0
-,
-	
-0
-<
-𝑥
-<
-𝐿
-
-
-∞
-,
-	
-otherwise
-V(x)={
-0,
-∞,
-	​
-
-0<x<L
-otherwise
-	​
-
+$$
+V(x) = \begin{cases} 
+0 & 0 < x < L \\
+\infty & \text{otherwise}
+\end{cases}
+$$
 
 The particle cannot escape the well, so the boundary conditions are:
 
-𝜓
-(
-0
-)
-=
-0
-,
-𝜓
-(
-𝐿
-)
-=
-0
-ψ(0)=0,ψ(L)=0
-2. Time-Independent Schrödinger Equation
+$$
+\psi(0) = 0, \quad \psi(L) = 0
+$$
 
-Inside the well (
-𝑉
-=
-0
-V=0):
+## 2. Time-Independent Schrödinger Equation
 
-−
-ℏ
-2
-2
-𝑚
-𝑑
-2
-𝜓
-𝑑
-𝑥
-2
-=
-𝐸
-𝜓
-−
-2m
-ℏ
-2
-	​
+Inside the well ($V=0$):
 
-dx
-2
-d
-2
-ψ
-	​
+$$
+-\frac{\hbar^2}{2m} \frac{d^2 \psi}{dx^2} = E \psi
+$$
 
-=Eψ
+Or equivalently:
 
-or equivalently:
+$$
+\frac{d^2 \psi}{dx^2} = -k^2 \psi
+$$
 
-𝑑
-2
-𝜓
-𝑑
-𝑥
-2
-=
-−
-𝑘
-2
-𝜓
-dx
-2
-d
-2
-ψ
-	​
+Where:
 
-=−k
-2
-ψ
+$$
+k = \frac{\sqrt{2 m E}}{\hbar}
+$$
 
-where
+## 3. Analytical Solution
 
-𝑘
-=
-2
-𝑚
-𝐸
-ℏ
-k=
-ℏ
-2mE
-	​
+**General solution:**
 
-	​
+$$
+\psi(x) = C_1 \sin(kx) + C_2 \cos(kx)
+$$
 
-3. Analytical Solution
+**Boundary condition $\psi(0) = 0$ implies $C_2 = 0$:**
 
-General solution:
+$$
+\psi(x) = C_1 \sin(kx)
+$$
 
-𝜓
-(
-𝑥
-)
-=
-𝐶
-1
-sin
-⁡
-(
-𝑘
-𝑥
-)
-+
-𝐶
-2
-cos
-⁡
-(
-𝑘
-𝑥
-)
-ψ(x)=C
-1
-	​
+**Boundary condition $\psi(L) = 0$ implies $\sin(kL) = 0$:**
 
-sin(kx)+C
-2
-	​
-
-cos(kx)
-
-Boundary condition 
-𝜓
-(
-0
-)
-=
-0
-⇒
-𝐶
-2
-=
-0
-ψ(0)=0⇒C
-2
-	​
-
-=0:
-
-𝜓
-(
-𝑥
-)
-=
-𝐶
-1
-sin
-⁡
-(
-𝑘
-𝑥
-)
-ψ(x)=C
-1
-	​
-
-sin(kx)
-
-Boundary condition 
-𝜓
-(
-𝐿
-)
-=
-0
-⇒
-sin
-⁡
-(
-𝑘
-𝐿
-)
-=
-0
-ψ(L)=0⇒sin(kL)=0:
-
-𝑘
-𝐿
-=
-𝑛
-𝜋
-,
-𝑛
-=
-1
-,
-2
-,
-3
-,
-…
-kL=nπ,n=1,2,3,…
+$$
+kL = n \pi, \quad n = 1, 2, 3, \dots
+$$
 
 So:
 
-𝑘
-=
-𝑛
-𝜋
-𝐿
-k=
-L
-nπ
-	​
+$$
+k = \frac{n \pi}{L}
+$$
 
+**Allowed energies:**
 
-Allowed energies:
+$$
+E_n = \frac{n^2 \pi^2 \hbar^2}{2 m L^2}
+$$
 
-𝐸
-𝑛
-=
-𝑛
-2
-𝜋
-2
-ℏ
-2
-2
-𝑚
-𝐿
-2
-E
-n
-	​
+**Normalized wave function:**
 
-=
-2mL
-2
-n
-2
-π
-2
-ℏ
-2
-	​
+$$
+\psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n \pi x}{L}\right)
+$$
 
-
-Normalized wave function:
-
-𝜓
-𝑛
-(
-𝑥
-)
-=
-2
-𝐿
- 
-sin
-⁡
-(
-𝑛
-𝜋
-𝑥
-𝐿
-)
-ψ
-n
-	​
-
-(x)=
-L
-2
-	​
-
-	​
-
-sin(
-L
-nπx
-	​
-
-)
-4. Numerical Second Derivative Using Taylor Expansion
+## 4. Numerical Second Derivative Using Taylor Expansion
 
 Divide the interval into points:
 
-𝑥
-0
-,
-𝑥
-1
-,
-𝑥
-2
-,
-…
-,
-𝑥
-𝑁
-−
-1
-x
-0
-	​
+$$
+x_0, x_1, x_2, \dots, x_{N-1}
+$$
 
-,x
-1
-	​
+With spacing:
 
-,x
-2
-	​
+$$
+dx = x_{i+1} - x_i
+$$
 
-,…,x
-N−1
-	​
+**Taylor expansion for $\psi(x)$:**
 
+$$
+\psi(x+dx) = \psi(x) + \psi'(x) dx + \frac{1}{2} \psi''(x) dx^2 + \dots
+$$
 
-with spacing:
-
-𝑑
-𝑥
-=
-𝑥
-𝑖
-+
-1
-−
-𝑥
-𝑖
-dx=x
-i+1
-	​
-
-−x
-i
-	​
-
-
-Taylor expansion for 
-𝜓
-(
-𝑥
-)
-ψ(x):
-
-𝜓
-(
-𝑥
-+
-𝑑
-𝑥
-)
-=
-𝜓
-(
-𝑥
-)
-+
-𝜓
-′
-(
-𝑥
-)
-𝑑
-𝑥
-+
-1
-2
-𝜓
-′
-′
-(
-𝑥
-)
-𝑑
-𝑥
-2
-+
-…
-ψ(x+dx)=ψ(x)+ψ
-′
-(x)dx+
-2
-1
-	​
-
-ψ
-′′
-(x)dx
-2
-+…
-𝜓
-(
-𝑥
-−
-𝑑
-𝑥
-)
-=
-𝜓
-(
-𝑥
-)
-−
-𝜓
-′
-(
-𝑥
-)
-𝑑
-𝑥
-+
-1
-2
-𝜓
-′
-′
-(
-𝑥
-)
-𝑑
-𝑥
-2
-+
-…
-ψ(x−dx)=ψ(x)−ψ
-′
-(x)dx+
-2
-1
-	​
-
-ψ
-′′
-(x)dx
-2
-+…
+$$
+\psi(x-dx) = \psi(x) - \psi'(x) dx + \frac{1}{2} \psi''(x) dx^2 + \dots
+$$
 
 Adding these:
 
-𝜓
-(
-𝑥
-+
-𝑑
-𝑥
-)
-+
-𝜓
-(
-𝑥
-−
-𝑑
-𝑥
-)
-=
-2
-𝜓
-(
-𝑥
-)
-+
-𝜓
-′
-′
-(
-𝑥
-)
-𝑑
-𝑥
-2
-+
-𝑂
-(
-𝑑
-𝑥
-4
-)
-ψ(x+dx)+ψ(x−dx)=2ψ(x)+ψ
-′′
-(x)dx
-2
-+O(dx
-4
-)
+$$
+\psi(x+dx) + \psi(x-dx) = 2 \psi(x) + \psi''(x) dx^2 + O(dx^4)
+$$
 
-Numerical second derivative:
+**Numerical second derivative:**
 
-𝜓
-′
-′
-(
-𝑥
-)
-≈
-𝜓
-(
-𝑥
-+
-𝑑
-𝑥
-)
-−
-2
-𝜓
-(
-𝑥
-)
-+
-𝜓
-(
-𝑥
-−
-𝑑
-𝑥
-)
-𝑑
-𝑥
-2
-ψ
-′′
-(x)≈
-dx
-2
-ψ(x+dx)−2ψ(x)+ψ(x−dx)
-	​
+$$
+\psi''(x) \approx \frac{\psi(x+dx) - 2 \psi(x) + \psi(x-dx)}{dx^2}
+$$
 
-5. Discretization of the Schrödinger Equation
+## 5. Discretization of the Schrödinger Equation
 
 Inside the well:
 
-𝜓
-′
-′
-(
-𝑥
-)
-=
-−
-𝑘
-2
-𝜓
-(
-𝑥
-)
-ψ
-′′
-(x)=−k
-2
-ψ(x)
+$$
+\psi''(x) = -k^2 \psi(x)
+$$
 
 Substitute the numerical second derivative:
 
-𝜓
-𝑖
-+
-1
-−
-2
-𝜓
-𝑖
-+
-𝜓
-𝑖
-−
-1
-𝑑
-𝑥
-2
-=
-−
-𝑘
-2
-𝜓
-𝑖
-dx
-2
-ψ
-i+1
-	​
+$$
+\frac{\psi_{i+1} - 2\psi_i + \psi_{i-1}}{dx^2} = -k^2 \psi_i
+$$
 
-−2ψ
-i
-	​
+Multiply by $dx^2$:
 
-+ψ
-i−1
-	​
+$$
+\psi_{i+1} = (2 - k^2 dx^2) \psi_i - \psi_{i-1}
+$$
 
-	​
+Since $k^2 = \frac{2 m E}{\hbar^2}$, define:
 
-=−k
-2
-ψ
-i
-	​
+$$
+c = k^2 dx^2 = \frac{2 m E dx^2}{\hbar^2}
+$$
 
+**Recurrence formula:**
 
-Multiply by 
-𝑑
-𝑥
-2
-dx
-2
-:
+$$
+\psi_{i+1} = (2 - c) \psi_i - \psi_{i-1}
+$$
 
-𝜓
-𝑖
-+
-1
-=
-(
-2
-−
-𝑘
-2
-𝑑
-𝑥
-2
-)
-𝜓
-𝑖
-−
-𝜓
-𝑖
-−
-1
-ψ
-i+1
-	​
+## 6. Initial Values for Numerical Solution
 
-=(2−k
-2
-dx
-2
-)ψ
-i
-	​
+Since $\psi(0) = 0$:
 
-−ψ
-i−1
-	​
-
-
-Since 
-𝑘
-2
-=
-2
-𝑚
-𝐸
-ℏ
-2
-k
-2
-=
-ℏ
-2
-2mE
-	​
-
-, define:
-
-𝑐
-=
-𝑘
-2
-𝑑
-𝑥
-2
-=
-2
-𝑚
-𝐸
-𝑑
-𝑥
-2
-ℏ
-2
-c=k
-2
-dx
-2
-=
-ℏ
-2
-2mEdx
-2
-	​
-
-
-Recurrence formula:
-
-𝜓
-𝑖
-+
-1
-=
-(
-2
-−
-𝑐
-)
-𝜓
-𝑖
-−
-𝜓
-𝑖
-−
-1
-ψ
-i+1
-	​
-
-=(2−c)ψ
-i
-	​
-
-−ψ
-i−1
-	​
-
-6. Initial Values for Numerical Solution
-
-Since 
-𝜓
-(
-0
-)
-=
-0
-ψ(0)=0:
-
-𝜓
-0
-=
-0
-ψ
-0
-	​
-
-=0
+$$
+\psi_0 = 0
+$$
 
 To avoid the sequence being entirely zero, use a small initial value:
 
-𝜓
-1
-=
-𝜖
-ψ
-1
-	​
+$$
+\psi_1 = \epsilon
+$$
 
-=ϵ
-7. Normalization of the Wave Function
+## 7. Normalization of the Wave Function
 
-Normalization condition:
+**Normalization condition:**
 
-∫
-0
-𝐿
-∣
-𝜓
-(
-𝑥
-)
-∣
-2
-𝑑
-𝑥
-=
-1
-∫
-0
-L
-	​
-
-∣ψ(x)∣
-2
-dx=1
+$$
+\int_0^L |\psi(x)|^2 dx = 1
+$$
 
 In the numerical approximation:
 
-∑
-𝑖
-𝜓
-𝑖
-2
-𝑑
-𝑥
-=
-1
-i
-∑
-	​
+$$
+\sum_i \psi_i^2 dx = 1
+$$
 
-ψ
-i
-2
-	​
+**Normalize:**
 
-dx=1
+$$
+\psi_i \leftarrow \frac{\psi_i}{\sqrt{\sum_j \psi_j^2 dx}}
+$$
 
-Normalize:
+## 8. Program Features and Inputs
 
-𝜓
-𝑖
-←
-𝜓
-𝑖
-∑
-𝑗
-𝜓
-𝑗
-2
-𝑑
-𝑥
-ψ
-i
-	​
+**Inputs**
+* Well length $L$ (from the user)
+* Quantum number $n$ (which energy state to calculate)
 
-←
-∑
-j
-	​
+**Features**
+* Compute analytical energy: $E_n = \frac{n^2 \pi^2 \hbar^2}{2 m L^2}$
+* Compute exact wave function $\psi_n(x)$
+* Solve Schrödinger equation numerically using second derivative discretization
+* Automatic normalization of the numerical wave function
+* Plot: exact and numerical wave functions, probability density $|\psi|^2$, and direct comparison
 
-ψ
-j
-2
-	​
-
-dx
-	​
-
-ψ
-i
-	​
-
-	​
-
-8. Program Features and Inputs
-
-Inputs
-
-Well length 
-𝐿
-L (from the user)
-
-Quantum number 
-𝑛
-n (which energy state to calculate)
-
-Features
-
-Compute analytical energy: 
-𝐸
-𝑛
-=
-𝑛
-2
-𝜋
-2
-ℏ
-2
-2
-𝑚
-𝐿
-2
-E
-n
-	​
-
-=
-2mL
-2
-n
-2
-π
-2
-ℏ
-2
-	​
-
-
-Compute exact wave function 
-𝜓
-𝑛
-(
-𝑥
-)
-ψ
-n
-	​
-
-(x)
-
-Solve Schrödinger equation numerically using second derivative discretization
-
-Automatic normalization of the numerical wave function
-
-Plot: exact and numerical wave functions, probability density 
-∣
-𝜓
-∣
-2
-∣ψ∣
-2
-, and direct comparison
-
-9. Project Outputs
+## 9. Project Outputs
 
 At the end, the program produces:
-
-Analytical wave function
-
-Numerical (approximate) wave function
-
-Comparison plot
-
-Probability density
-
-Quantized energy of the chosen state
+* Analytical wave function
+* Numerical (approximate) wave function
+* Comparison plot
+* Probability density
+* Quantized energy of the chosen state
