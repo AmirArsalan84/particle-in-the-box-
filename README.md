@@ -1,1001 +1,194 @@
-# particle-in-the-box-
-شبیه سازی چاه پتانسیل بی نهایت یک بعدی با روش آنالیزی و عددی 
-1D infinite potential well simulator comparing analytical and numerical solutions using Python.
-
-حل چاه پتانسیل نامتناهی تک‌بعدی با روش تحلیلی و عددی
-
-این پروژه حل معادله شرودینگر مستقل از زمان برای چاه پتانسیل نامتناهی یک‌بعدی را با دو روش انجام می‌دهد:
-
-حل دقیق (تحلیلی)
-
-حل عددی با استفاده از بسط تیلور و گسسته‌سازی مشتق دوم
-
-هدف، مقایسه‌ی تابع موج دقیق و تقریب عددی و همچنین بررسی ساختار انرژی‌های کوانتیده است.
-
-## 1. فیزیک مسئله: چاه پتانسیل نامتناهی
-
-پتانسیل:
-
-𝑉
-(
-𝑥
-)
-=
-{
-0
-	
-0
-<
-𝑥
-<
-𝐿
-
-
-∞
-	
-otherwise
-V(x)={
-0
-∞
-	​
-
-0<x<L
-otherwise
-	​
-
-
-ذره نمی‌تواند از چاه خارج شود ⇒ بنابراین شرط مرزی:
-
-𝜓
-(
-0
-)
-=
-0
-,
-𝜓
-(
-𝐿
-)
-=
-0
-ψ(0)=0,ψ(L)=0
-## 2. معادله شرودینگر مستقل از زمان
-−
-ℏ
-2
-2
-𝑚
-𝑑
-2
-𝜓
-𝑑
-𝑥
-2
-+
-𝑉
-(
-𝑥
-)
-𝜓
-=
-𝐸
-𝜓
-−
-2m
-ℏ
-2
-	​
-
-dx
-2
-d
-2
-ψ
-	​
-
-+V(x)ψ=Eψ
-
-داخل چاه 
-𝑉
-=
-0
-V=0، پس:
-
-𝑑
-2
-𝜓
-𝑑
-𝑥
-2
-=
-−
-𝑘
-2
-𝜓
-dx
-2
-d
-2
-ψ
-	​
-
-=−k
-2
-ψ
-
-که در آن:
-
-𝑘
-=
-2
-𝑚
-𝐸
-ℏ
-k=
-ℏ
-2mE
-	​
-
-	​
-
-## 3. حل تحلیلی معادله
-
-حل عمومی:
-
-𝜓
-(
-𝑥
-)
-=
-𝐶
-1
-sin
-⁡
-(
-𝑘
-𝑥
-)
-+
-𝐶
-2
-cos
-⁡
-(
-𝑘
-𝑥
-)
-ψ(x)=C
-1
-	​
-
-sin(kx)+C
-2
-	​
-
-cos(kx)
-
-شرط مرزی 
-𝜓
-(
-0
-)
-=
-0
-⇒
-𝐶
-2
-=
-0
-ψ(0)=0⇒C
-2
-	​
-
-=0
-
-𝜓
-(
-𝑥
-)
-=
-𝐶
-1
-sin
-⁡
-(
-𝑘
-𝑥
-)
-ψ(x)=C
-1
-	​
-
-sin(kx)
-
-شرط مرزی 
-𝜓
-(
-𝐿
-)
-=
-0
-⇒
-sin
-⁡
-(
-𝑘
-𝐿
-)
-=
-0
-ψ(L)=0⇒sin(kL)=0
-
-𝑘
-𝐿
-=
-𝑛
-𝜋
-𝑛
-=
-1
-,
-2
-,
-3
-,
-…
-kL=nπn=1,2,3,…
-
-پس:
-
-𝑘
-=
-𝑛
-𝜋
-𝐿
-k=
-L
-nπ
-	​
-
-
-و انرژی‌های مجاز:
-
-𝐸
-𝑛
-=
-𝑛
-2
-𝜋
-2
-ℏ
-2
-2
-𝑚
-𝐿
-2
-E
-n
-	​
-
-=
-2mL
-2
-n
-2
-π
-2
-ℏ
-2
-	​
-
-
-تابع موج نرمال‌شده:
-
-𝜓
-𝑛
-(
-𝑥
-)
-=
-2
-𝐿
-sin
-⁡
-(
-𝑛
-𝜋
-𝑥
-𝐿
-)
-ψ
-n
-	​
-
-(x)=
-L
-2
-	​
-
-	​
-
-sin(
-L
-nπx
-	​
-
-)
-## 4. استخراج مشتق دوم عددی با استفاده از بسط تیلور
-
-برای گسسته‌سازی، بازه را به نقاط زیر تقسیم می‌کنیم:
-
-𝑥
-0
-,
- 
-𝑥
-1
-,
- 
-𝑥
-2
-,
-.
-.
-.
-,
-𝑥
-𝑁
-−
-1
-x
-0
-	​
-
-, x
-1
-	​
-
-, x
-2
-	​
-
-,...,x
-N−1
-	​
-
-
-فاصله:
-
-𝑑
-𝑥
-=
-𝑥
-𝑖
-+
-1
-−
-𝑥
-𝑖
-dx=x
-i+1
-	​
-
-−x
-i
-	​
-
-بسط تیلور برای 
-𝜓
-(
-𝑥
-)
-ψ(x):
-𝜓
-(
-𝑥
-+
-𝑑
-𝑥
-)
-=
-𝜓
-(
-𝑥
-)
-+
-𝜓
-′
-(
-𝑥
-)
-𝑑
-𝑥
-+
-1
-2
-𝜓
-′
-′
-(
-𝑥
-)
-𝑑
-𝑥
-2
-+
-…
-ψ(x+dx)=ψ(x)+ψ
-′
-(x)dx+
-2
-1
-	​
-
-ψ
-′′
-(x)dx
-2
-+…
-𝜓
-(
-𝑥
-−
-𝑑
-𝑥
-)
-=
-𝜓
-(
-𝑥
-)
-−
-𝜓
-′
-(
-𝑥
-)
-𝑑
-𝑥
-+
-1
-2
-𝜓
-′
-′
-(
-𝑥
-)
-𝑑
-𝑥
-2
-+
-…
-ψ(x−dx)=ψ(x)−ψ
-′
-(x)dx+
-2
-1
-	​
-
-ψ
-′′
-(x)dx
-2
-+…
-
-اگر این دو را جمع کنیم:
-
-𝜓
-(
-𝑥
-+
-𝑑
-𝑥
-)
-+
-𝜓
-(
-𝑥
-−
-𝑑
-𝑥
-)
-=
-2
-𝜓
-(
-𝑥
-)
-+
-𝜓
-′
-′
-(
-𝑥
-)
-𝑑
-𝑥
-2
-+
-𝑂
-(
-𝑑
-𝑥
-4
-)
-ψ(x+dx)+ψ(x−dx)=2ψ(x)+ψ
-′′
-(x)dx
-2
-+O(dx
-4
-)
-
-⇒ مشتق دوم عددی:
-
-𝜓
-′
-′
-(
-𝑥
-)
-≈
-𝜓
-(
-𝑥
-+
-𝑑
-𝑥
-)
-−
-2
-𝜓
-(
-𝑥
-)
-+
-𝜓
-(
-𝑥
-−
-𝑑
-𝑥
-)
-𝑑
-𝑥
-2
-ψ
-′′
-(x)≈
-dx
-2
-ψ(x+dx)−2ψ(x)+ψ(x−dx)
-	​
-
-
-این رابطه پایه‌ی روش‌های عددی برای حل شرودینگر است.
-
-## 5. گسسته‌سازی معادله شرودینگر
-
-داخل چاه داریم:
-
-𝜓
-′
-′
-(
-𝑥
-)
-=
-−
-𝑘
-2
-𝜓
-(
-𝑥
-)
-ψ
-′′
-(x)=−k
-2
-ψ(x)
-
-با جایگذاری مشتق دوم عددی:
-
-𝜓
-𝑖
-+
-1
-−
-2
-𝜓
-𝑖
-+
-𝜓
-𝑖
-−
-1
-𝑑
-𝑥
-2
-=
-−
-𝑘
-2
-𝜓
-𝑖
-dx
-2
-ψ
-i+1
-	​
-
-−2ψ
-i
-	​
-
-+ψ
-i−1
-	​
-
-	​
-
-=−k
-2
-ψ
-i
-	​
-
-
-ضرب در 
-𝑑
-𝑥
-2
-dx
-2
-:
-
-𝜓
-𝑖
-+
-1
-=
-(
-2
-−
-𝑘
-2
-𝑑
-𝑥
-2
-)
-𝜓
-𝑖
-−
-𝜓
-𝑖
-−
-1
-ψ
-i+1
-	​
-
-=(2−k
-2
-dx
-2
-)ψ
-i
-	​
-
-−ψ
-i−1
-	​
-
-
-از آنجا که:
-
-𝑘
-2
-=
-2
-𝑚
-𝐸
-ℏ
-2
-k
-2
-=
-ℏ
-2
-2mE
-	​
-
-
-داریم:
-
-𝑐
-=
-𝑘
-2
-𝑑
-𝑥
-2
-=
-2
-𝑚
-𝐸
- 
-𝑑
-𝑥
-2
-ℏ
-2
-c=k
-2
-dx
-2
-=
-ℏ
-2
-2mEdx
-2
-	​
-
-
-پس فرمول بازگشتی:
-
-𝜓
-𝑖
-+
-1
-=
-(
-2
-−
-𝑐
-)
-𝜓
-𝑖
-−
-𝜓
-𝑖
-−
-1
-ψ
-i+1
-	​
-
-=(2−c)ψ
-i
-	​
-
-−ψ
-i−1
-	​
-
-
-این همان رابطه‌ای است که در کد استفاده می‌شود.
-
-## 6. مقداردهی اولیه برای شروع حل عددی
-
-چون:
-
-𝜓
-(
-0
-)
-=
-0
-ψ(0)=0
-
-گره اول صفر است:
-
-𝜓
-0
-=
-0
-ψ
-0
-	​
-
-=0
-
-برای جلوگیری از صفر شدن کامل دنباله، مقدار کوچک:
-
-𝜓
-1
-=
-𝜀
-ψ
-1
-	​
-
-=ε
-
-این دو مقدار، تمام چیزی هستند که الگوریتم نیاز دارد — با رابطه بازگشتی، تمام نقاط بعدی ساخته می‌شوند.
-
-## 7. نرمال‌سازی تابع موج
-
-شرط نرمال بودن:
-
-∫
-0
-𝐿
-∣
-𝜓
-(
-𝑥
-)
-∣
-2
-𝑑
-𝑥
-=
-1
-∫
-0
-L
-	​
-
-∣ψ(x)∣
-2
-dx=1
-
-در تقریب عددی:
-
-∑
-𝑖
-𝜓
-𝑖
-2
- 
-𝑑
-𝑥
-=
-1
-i
-∑
-	​
-
-ψ
-i
-2
-	​
-
-dx=1
-
-پس:
-
-𝜓
-𝑖
-←
-𝜓
-𝑖
-∑
-𝑗
-𝜓
-𝑗
-2
- 
-𝑑
-𝑥
-ψ
-i
-	​
-
-←
-∑
-j
-	​
-
-ψ
-j
-2
-	​
-
-dx
-	​
-
-ψ
-i
-	​
-
-	​
-
-## 8. ویژگی‌ها و ورودی‌های برنامه
-
-این برنامه دارای قابلیت‌ها و ورودی‌های زیر است:
-
-ورودی‌ها
-
-طول چاه:
-
-𝐿
-L
-
-که از کاربر دریافت می‌شود.
-
-عدد کوانتومی:
-
-𝑛
-n
-
-که تعیین می‌کند کدام حالت انرژی محاسبه شود.
-
-ویژگی‌ها
-
-محاسبه انرژی تحلیلی بر اساس رابطه کوانتومی
-
-𝐸
-𝑛
-=
-𝑛
-2
-𝜋
-2
-ℏ
-2
-2
-𝑚
-𝐿
-2
-E
-n
-	​
-
-=
-2mL
-2
-n
-2
-π
-2
-ℏ
-2
-	​
-
-
-محاسبه تابع موج دقیق 
-𝜓
-𝑛
-(
-𝑥
-)
-ψ
-n
-	​
-
-(x)
-
-حل عددی معادله شرودینگر با استفاده از گسسته‌سازی دومین مشتق
-
-نرمال‌سازی خودکار تابع موج عددی
-
-رسم:
-
-تابع موج دقیق و عددی
-
-چگالی احتمال 
-∣
-𝜓
-∣
-2
-∣ψ∣
-2
-
-مقایسه مستقیم بین حل تحلیلی و حل عددی
-
-## 9. خروجی‌های پروژه
-
-در پایان برنامه:
-
-تابع موج تحلیلی
-
-تابع موج عددی (تقریبی)
-
-نمودار مقایسه‌ای
-
-چگالی احتمال
-
-انرژی حالت کوانتومی
+Solving the One-Dimensional Infinite Potential Well Using Analytical and Numerical Methods
+
+This project solves the time-independent Schrödinger equation for a one-dimensional infinite potential well using two methods:
+
+Analytical (Exact) Solution
+
+Numerical Solution using Taylor expansion and discretization of the second derivative.
+
+The goal is to compare the exact wave function with the numerical approximation and to examine the structure of quantized energies.
+
+1. Physics of the Problem: Infinite Potential Well
+
+The potential:
+
+V(x) = { 0       , 0 < x < L
+         ∞       , otherwise }
+
+
+The particle cannot escape the well, so the boundary conditions are:
+
+ψ(0) = 0, ψ(L) = 0
+
+2. Time-Independent Schrödinger Equation
+-(ℏ^2 / 2m) * d²ψ/dx² + V(x) ψ = E ψ
+
+
+Inside the well (V = 0):
+
+d²ψ/dx² = -k² ψ
+
+
+where
+
+k = √(2 m E) / ℏ
+
+3. Analytical Solution
+
+General solution:
+
+ψ(x) = C1 sin(kx) + C2 cos(kx)
+
+
+Boundary condition ψ(0) = 0 ⇒ C2 = 0:
+
+ψ(x) = C1 sin(kx)
+
+
+Boundary condition ψ(L) = 0 ⇒ sin(kL) = 0:
+
+k L = n π, n = 1,2,3,...
+
+
+So:
+
+k = n π / L
+
+
+Allowed energies:
+
+E_n = (n² π² ℏ²) / (2 m L²)
+
+
+Normalized wave function:
+
+ψ_n(x) = √(2/L) * sin(n π x / L)
+
+4. Numerical Second Derivative Using Taylor Expansion
+
+Divide the interval into points:
+
+x0, x1, x2, ..., x_{N-1}
+
+
+with spacing:
+
+dx = x_{i+1} - x_i
+
+
+Taylor expansion for ψ(x):
+
+ψ(x+dx) = ψ(x) + ψ'(x) dx + 1/2 ψ''(x) dx² + ...
+ψ(x-dx) = ψ(x) - ψ'(x) dx + 1/2 ψ''(x) dx² + ...
+
+
+Adding these:
+
+ψ(x+dx) + ψ(x-dx) = 2 ψ(x) + ψ''(x) dx² + O(dx⁴)
+
+
+Numerical second derivative:
+
+ψ''(x) ≈ (ψ(x+dx) - 2 ψ(x) + ψ(x-dx)) / dx²
+
+
+This forms the basis for numerical Schrödinger solvers.
+
+5. Discretization of the Schrödinger Equation
+
+Inside the well:
+
+ψ''(x) = -k² ψ(x)
+
+
+Using the numerical second derivative:
+
+(ψ_{i+1} - 2ψ_i + ψ_{i-1}) / dx² = -k² ψ_i
+
+
+Multiply both sides by dx²:
+
+ψ_{i+1} = (2 - k² dx²) ψ_i - ψ_{i-1}
+
+
+Since k² = 2 m E / ℏ², define:
+
+c = k² dx² = 2 m E dx² / ℏ²
+
+
+The recurrence formula:
+
+ψ_{i+1} = (2 - c) ψ_i - ψ_{i-1}
+
+
+This is the formula used in the numerical code.
+
+6. Initial Values for Numerical Solution
+
+Since ψ(0) = 0:
+
+ψ_0 = 0
+
+
+To avoid the entire sequence being zero, use a small initial value:
+
+ψ_1 = ε
+
+
+These two values are all the algorithm needs; the rest of the points are generated using the recurrence relation.
+
+7. Normalization of the Wave Function
+
+Normalization condition:
+
+∫₀ᴸ |ψ(x)|² dx = 1
+
+
+In the numerical approximation:
+
+Σ_i ψ_i² dx = 1
+
+
+So normalize:
+
+ψ_i ← ψ_i / √(Σ_j ψ_j² dx)
+
+8. Program Features and Inputs
+
+Inputs
+
+Well length: L (from the user)
+
+Quantum number: n (which energy state to calculate)
+
+Features
+
+Compute analytical energy: E_n = n² π² ℏ² / (2 m L²)
+
+Compute exact wave function ψ_n(x)
+
+Solve Schrödinger equation numerically using second derivative discretization
+
+Automatic normalization of the numerical wave function
+
+Plot:
+
+Exact and numerical wave functions
+
+Probability density |ψ|²
+
+Direct comparison between analytical and numerical solutions
+
+9. Project Outputs
+
+At the end, the program produces:
+
+Analytical wave function
+
+Numerical (approximate) wave function
+
+Comparison plot
+
+Probability density
+
+Quantized energy of the chosen state
